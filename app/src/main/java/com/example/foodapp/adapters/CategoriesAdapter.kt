@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.foodapp.databinding.ActivityCategoryDetailBinding
-import com.example.foodapp.databinding.CategoryItemBinding
 import com.example.foodapp.databinding.PopularItemsBinding
 import com.example.foodapp.models.CategoryMeals
 

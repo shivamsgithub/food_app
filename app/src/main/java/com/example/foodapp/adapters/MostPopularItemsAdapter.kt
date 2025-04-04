@@ -31,6 +31,7 @@ class MostPopularItemsAdapter(): RecyclerView.Adapter<MostPopularItemsAdapter.Po
             .load(mealLIst[position].strMealThumb)
             .into(holder.binding.ivPopularMeal)
 
+        holder.binding.tvMealName.text = mealLIst[position].strMeal
 
         holder.itemView.setOnClickListener{
             onItemClick.invoke(mealLIst[position])

@@ -54,6 +54,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/_5sdp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <LinearLayout
@@ -94,7 +95,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="- Instructions : "
+                android:text="Instructions : "
                 android:textStyle="bold"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_16sdp"
@@ -105,7 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:textSize="@dimen/_16sdp"
+                android:text="Details"
+                android:textSize="16sp"
                 android:layout_margin="@dimen/_5sdp" />
 
 
