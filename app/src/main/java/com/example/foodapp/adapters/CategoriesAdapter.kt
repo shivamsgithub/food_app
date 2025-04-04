@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.foodapp.databinding.ActivityCategoryDetailBinding
+import com.example.foodapp.databinding.CategoryItemBinding
 import com.example.foodapp.databinding.PopularItemsBinding
 import com.example.foodapp.models.CategoryMeals
 
@@ -26,13 +28,15 @@ class CategoriesAdapter(): RecyclerView.Adapter<CategoriesAdapter.CategoryMealVi
     }
 
     override fun onBindViewHolder(holder: CategoryMealViewHolder, position: Int) {
-        /*Glide.with(holder.itemView)
-            .load(mealLIst[position].strCategoryThumb)
-            .into(holder.binding.ivPopularMeal)*/
+        Glide.with(holder.itemView)
+            .load(mealLIst[position].strMealThumb)
+            .into(holder.binding.ivPopularMeal)
 
-        /*holder.itemView.setOnClickListener{
+        holder.binding.tvMealName.text = mealLIst[position].strMeal
+
+        holder.itemView.setOnClickListener{
             onItemClick.invoke(mealLIst[position])
-        }*/
+        }
     }
 
     class CategoryMealViewHolder(val binding: PopularItemsBinding): RecyclerView.ViewHolder(binding.root)
