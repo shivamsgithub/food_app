@@ -4,14 +4,18 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.foodapp.databinding.ActivityMealBinding
+import com.example.foodapp.db.MealDatabase
 import com.example.foodapp.fragment.HomeFragment
 import com.example.foodapp.models.Meal
 import com.example.foodapp.viewModel.MealViewModel
+import com.example.foodapp.viewModel.MealViewModelFactory
 
 class MealActivity : AppCompatActivity() {
 
@@ -27,8 +31,11 @@ class MealActivity : AppCompatActivity() {
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val mealDatabase = MealDatabase.getInstance(this)
+        val viewModelFactory = MealViewModelFactory(mealDatabase)
+        mealMvvm = ViewModelProvider(this, viewModelFactory)[MealViewModel::class.java]
 
-        mealMvvm = ViewModelProviders.of(this)[MealViewModel::class.java]
+//        mealMvvm = ViewModelProviders.of(this)[MealViewModel::class.java]
         getMealInformationFromIntent()
 
         setInformationInViews()
@@ -40,8 +47,19 @@ class MealActivity : AppCompatActivity() {
         observerMealDetailLivedData()
 
         onYoutubeClick()
+        onFavoriteClick()
     }
 
+    private fun onFavoriteClick() {
+        binding.fabAddToFavourites.setOnClickListener{
+            mealToSave?.let {
+                mealMvvm.insertMeal(it)
+                Toast.makeText(this, "Meal Added To Favorites", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private  var mealToSave : Meal?= null
 
     private fun observerMealDetailLivedData(){
         mealMvvm.observerDetailsLiveData().observe(this, object : Observer<Meal>{
@@ -50,11 +68,13 @@ class MealActivity : AppCompatActivity() {
 
                 val meal = value
 
+                mealToSave = meal
+
                 binding.tvCategory.text = "Category : ${meal!!.strCategory}"
                 binding.tvArea.text = "Area : ${meal!!.strArea}"
                 binding.tvInstructions.text = meal.strInstructions
 
-                youtubeLink = meal.strYoutube
+                youtubeLink = meal.strYoutube.toString()
             }
         })
     }
