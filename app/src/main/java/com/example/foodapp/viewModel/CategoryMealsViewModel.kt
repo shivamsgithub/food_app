@@ -11,6 +11,35 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
+class CategoryMealsViewModel : ViewModel() {
+
+    private var categoryMealLiveData: MutableLiveData<List<CategoryMeals>> = MutableLiveData()
+
+    fun getMealsByCategory(categoryName: String) {
+        RetrofitInstance.api.getMealsByCategory(categoryName).enqueue(object : Callback<CategoryList> {
+            override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
+                if (response.body() != null) {
+                    categoryMealLiveData.value = response.body()!!.meals
+                } else {
+                    Log.d("CategoryMealsViewModel", "Response body is null")
+                }
+            }
+
+            override fun onFailure(call: Call<CategoryList>, t: Throwable) {
+                Log.d("CategoryMealsViewModel", "Error: ${t.message}")
+            }
+        })
+    }
+
+    fun observerCategoryLiveData(): LiveData<List<CategoryMeals>> {
+        return categoryMealLiveData
+    }
+}
+
+
+
+/*
 class CategoryMealsViewModel : ViewModel() {
 
     private var categoryMealLiveData: MutableLiveData<CategoryMeals> = MutableLiveData()
@@ -36,4 +65,4 @@ class CategoryMealsViewModel : ViewModel() {
     fun observerCategoryLiveData() : LiveData<CategoryMeals> {
         return categoryMealLiveData
     }
-}
+}*/
